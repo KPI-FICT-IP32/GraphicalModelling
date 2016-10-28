@@ -1,17 +1,15 @@
 containers:
   app:
     setup:
-      - !Alpine v3.4
+      - !Ubuntu xenial
+      - !UbuntuUniverse
       - !Install
         - wget
         - ca-certificates
-        - libzmq
-        - musl-dev
-        - freetype-dev
         - libpng-dev
         - ffmpeg
         - python-dev
-      - !Sh ln -s /usr/include/locale.h /usr/include/xlocale.h
+        - pandoc
       - !PipConfig
         dependencies: true
         python-exe: python3.5
@@ -22,6 +20,7 @@ containers:
         - numpy
         - matplotlib
         - pandas
+        - bokeh
     volumes:
       /root: !Tmpfs
         size: 10M
@@ -34,7 +33,6 @@ commands:
     run:
       - jupyter
       - notebook
-      - --matplotlib=inline
   freeze: !Command
     description: Freeze requirements into requirements.txt
     container: app
